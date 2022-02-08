@@ -1,0 +1,13 @@
+#navbar-brand{
+    position: absolute !important;
+    left: 20px !important;
+}
+
+#logout{
+    position: absolute !important;
+    right: 0px !important;
+}
+
+.navbar{
+    background-color: rgb(240, 243, 250);
+}

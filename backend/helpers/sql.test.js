@@ -1,0 +1,24 @@
+const { partialUpdate } = require("./sql");
+
+
+describe("partialUpdate", function () {
+  test("works: updating 1 item", function () {
+    const result = partialUpdate(
+        { f1: "v1" },
+        { f1: "f1", fF2: "f2" });
+    expect(result).toEqual({
+      setCols: "\"f1\"=$1",
+      values: ["v1"],
+    });
+  });
+
+  test("works: updating 2 items", function () {
+    const result = partialUpdate(
+        { f1: "v1", jsF2: "v2" },
+        { jsF2: "f2" });
+    expect(result).toEqual({
+      setCols: "\"f1\"=$1, \"f2\"=$2",
+      values: ["v1", "v2"],
+    });
+  });
+});

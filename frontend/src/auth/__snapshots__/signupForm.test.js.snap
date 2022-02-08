@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="form mt-4"
+  >
+    <div
+      class="col-md-6 col-lg-4 offset-lg-4 p-0"
+    >
+      <h2>
+        Sign Up
+      </h2>
+      <div
+        class="card shadow-lg p-5"
+      >
+        <div
+          class="card-body w-100"
+        >
+          <form>
+            <div
+              class="form-group"
+            >
+              <label
+                class="fw-bold"
+              >
+                Username
+              </label>
+              <input
+                class="form-control mb-3"
+                name="username"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="fw-bold"
+              >
+                Password
+              </label>
+              <input
+                class="form-control mb-3"
+                name="password"
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="fw-bold"
+              >
+                First name
+              </label>
+              <input
+                class="form-control mb-3"
+                name="firstName"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="fw-bold"
+              >
+                Last name
+              </label>
+              <input
+                class="form-control mb-3"
+                name="lastName"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="fw-bold"
+              >
+                Email
+              </label>
+              <input
+                class="form-control mb-3"
+                name="email"
+                type="email"
+                value=""
+              />
+            </div>
+            <div
+              class="form-check form-group"
+            >
+              <label
+                class="form-check-label fw-bold"
+              >
+                Enable Email Alerts
+              </label>
+              <input
+                class="form-check-input form-control mb-3"
+                name="enableAlerts"
+                type="checkbox"
+              />
+            </div>
+            <button
+              class="btn btn-primary w-100"
+              type="submit"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.company.com/articleNew.schema.json",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string"
+      },
+      "imageUrl": {
+        "type": "string"
+      },
+      "datePublished": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+        "title",
+        "url",
+        "imageUrl"
+    ]
+  }
