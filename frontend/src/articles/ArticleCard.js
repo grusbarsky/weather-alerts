@@ -45,7 +45,7 @@ function ArticleCard(props) {
           <h5 className="card-title font-weight-bold text-left">{title}</h5>
           <p className='blockquote-footer source'>From {source} <br></br>&nbsp; &nbsp; {datePublished}</p>
           <p className='description'>{removeHtml(description)}</p>
-          <img alt="" src={imageUrl} className="rounded img-fluid" />
+          <img alt="" src={imageUrl} className="rounded w-100 img-fluid" />
         </div>
       </a>
       <div className="btn-group">
