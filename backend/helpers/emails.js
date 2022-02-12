@@ -1,5 +1,3 @@
-// functions that send emails via sendgrid
-
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
@@ -7,8 +5,7 @@ const { getEmail } = require("../config")
 
 sgMail.setApiKey(SENDGRID_API_KEY)
 
-// send article
-
+// helper function that handles sending articles
 const emailArticle = async (recipient, user, message, articleUrl) => {
     const senderEmail = getEmail()
 
@@ -28,8 +25,7 @@ const emailArticle = async (recipient, user, message, articleUrl) => {
 }
 
 
-// send alert emails
-
+// helper function that handles sending emails for alerts
 const emailAlerts = async (user, alerts) => {
     const senderEmail = getEmail()
     let message = alerts.join(' <br> <br> ');

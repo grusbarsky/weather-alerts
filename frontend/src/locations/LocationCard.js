@@ -1,12 +1,10 @@
-import React, { useContext, useState } from "react";
-import UserContext from "../auth/UserContext";
-import WeatherAlertApi from "../api";
+import React from "react";
 
 // article snapshot
 
 function LocationCard(props) {
 
-  let { id, formattedAddress, coordinates } = props.data;
+  let formattedAddress = props.data.formattedAddress;
 
 
   async function handleDeleteLocation() {
@@ -15,7 +13,7 @@ function LocationCard(props) {
 
 
   return (
-    <div className={`LocationCard card ${props.width} mx-auto my-3 p-0 shadow-sm rounded border-light`}>
+    <div className={`LocationCard card ${props.width} mx-auto mb-4 p-0 shadow-sm rounded border-light`}>
       <div className="card-body">
         <h5 className="card-title">{formattedAddress}</h5>
         <button

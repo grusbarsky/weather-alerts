@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useContext } from "react";
+import LoadingOverlay from 'react-loading-overlay';
 import LocationCard from "./LocationCard";
 import OptionCard from "./OptionCard";
 import SearchForm from "../search/SearchForm";
@@ -13,7 +14,7 @@ import WeatherAlertApi from "../api";
 
 function LocationList(props) {
 
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [locations, setLocations] = useState(null);
   const [saved, setSaved] = useState(true);
   const [options, setOptions] = useState(null);
@@ -22,10 +23,15 @@ function LocationList(props) {
     usersLocations();
   }, []);
 
-  async function search(query) {
+
+  async function onSearchSubmit(query) {
     let options = await WeatherAlertApi.getLocations(query);
     setOptions(options);
-  }
+  };
+
+  function clearResults(){
+    setOptions(null);
+  };
 
   async function usersLocations() {
     let locations = await currentUser.locations;
@@ -44,6 +50,8 @@ function LocationList(props) {
       setSaved(saved);
       setLocations(l => [...l, saved])
       setOptions(null);
+      let updatedUser = await WeatherAlertApi.getCurrentUser(currentUser.username);
+      setCurrentUser(updatedUser);
     } catch (err) {
       console.log(err)
     }
@@ -54,16 +62,42 @@ function LocationList(props) {
       let deleted = await WeatherAlertApi.deleteLocation(currentUser.username, info.id)
       setSaved(!saved);
       setLocations(locations.filter(l => l.id !== info.id));
+      let updatedUser = await WeatherAlertApi.getCurrentUser(currentUser.username);
+      setCurrentUser(updatedUser);
     } catch (err) {
       console.log(err)
     }
   }
 
-  if (!locations) return <h3 className="text-center mt-5">Loading...</h3>;
+  if (!locations) return (
+    <div className='p-5'>
+      <div className='m-5 p-5'>
+        <LoadingOverlay
+          active
+          spinner={true}
+          text='Loading...'
+          styles={{
+            spinner: (base) => ({
+              ...base,
+              width: '7rem',
+              '& svg circle': {
+                stroke: 'black'
+              }
+            }),
+            overlay: (base) => ({
+              ...base,
+              background: 'gray'
+            })
+          }}
+        >
+        </LoadingOverlay>
+      </div>
+    </div>
+  );
 
   return (
     <div className="LocationList">
-      <SearchForm searchFor={search} />
+      <SearchForm onSearchSubmit={onSearchSubmit} clearResults={clearResults} />
       {options
         ? (
           <div className="OptionList-list list-group w-50 mx-auto">

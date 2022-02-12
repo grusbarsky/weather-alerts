@@ -4,14 +4,13 @@
 
 const jsonschema = require("jsonschema");
 const express = require("express");
+const router = express.Router();
+
 const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
 const userUpdateSchema = require("../schemas/userEdit.json");
 const { ensureCorrectUser } = require("../middleware/auth");
 const { locationSearch } = require("../helpers/locationSearch")
-
-
-const router = express.Router();
 
 
 
@@ -37,11 +36,10 @@ router.get("/:username", ensureCorrectUser, async function (req, res, next) {
 // only a logged in user can change their settings
 
 router.patch("/:username", ensureCorrectUser, async function (req, res, next) {
-  console.log("********* user: " +JSON.stringify(req.body))
   try {
     const validator = jsonschema.validate(req.body, userUpdateSchema);
     if (!validator.valid) {
-      const errs = validator.errors.map(e => e.stack);
+      const errs = validator.errors.map(e => e.schema.message);
       throw new BadRequestError(errs);
     }
     const authenticate = await User.authenticate(req.params.username, req.body.password);
@@ -73,7 +71,8 @@ router.delete("/:username", ensureCorrectUser, async function (req, res, next) {
 // {"location":"Baltimore City"}
 router.get("/locations/search/", async function(req, res, next){
   const query = req.query;
-  let encoded = encodeURI(query.location)
+  // makes multi word search, url friendly
+  let encoded = encodeURI(query.location);
   
   try{ 
     const resp = await locationSearch(encoded);
@@ -84,7 +83,7 @@ router.get("/locations/search/", async function(req, res, next){
   }
 });
 
-// save location
+// user saves location
 // {"location":{
 //      "formattedAddress": "address",
 //      "coordinates": "lat,long"}}
@@ -99,7 +98,7 @@ router.post("/:username/save-location", ensureCorrectUser, async function (req, 
     }
 });
 
-// delete location
+// user deletes location
 router.delete("/:username/delete-location/:id", ensureCorrectUser, async function (req, res, next){
   try {
       const locationId = +req.params.id;

@@ -1,34 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // show search form and pass props
 
-function SearchForm({ searchFor }) {
+function SearchForm({ onSearchSubmit, clearResults }) {
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [updatedTerm, setUpdatedTerm] = useState(searchTerm);
 
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    searchFor(searchTerm.trim() || undefined);
-    setSearchTerm('');
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => setSearchTerm(updatedTerm), 500);
+    return () => clearTimeout(timer);
+  }, [updatedTerm])
 
-  function handleChange(evt) {
-    setSearchTerm(evt.target.value);
-  }
+  useEffect(() => {
+    if (searchTerm !== '') {
+      onSearchSubmit(searchTerm);
+    }
+    else {
+      clearResults();
+    }
+  }, [searchTerm]);
 
   return (
-        <form className="d-flex justify-content-center my-3" onSubmit={handleSubmit}>
-            <input
-              className="form-control form-control-p-2 form-control-lg w-25"
-              name="searchTerm"
-              placeholder="Search"
-              value={searchTerm}
-              onChange={handleChange}
-            />
-          <button type="submit" className="btn btn-primary p-2">
-            Submit
-          </button>
-        </form>
+    <form className="d-flex justify-content-center pt-2 mt-3">
+      <input
+        className="form-control form-control-p-2 m-2 form-control-lg w-25"
+        name="searchTerm"
+        placeholder="Search"
+        value={updatedTerm}
+        onChange={e => setUpdatedTerm(e.target.value)}
+      />
+      <button type="submit" className="btn m-2 btn-primary btn-sm">
+        Submit
+      </button>
+    </form>
   );
 }
 

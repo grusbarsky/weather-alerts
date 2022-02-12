@@ -1,5 +1,5 @@
 // helper function to set todays date and date 7 days ago
-// used for api news call
+// used for api news call to see relevant articles
 
 function getDates(){
     let todaysDate = new Date().toJSON().slice(0,10).replace(/-/g,'-');

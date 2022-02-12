@@ -101,12 +101,12 @@ function ProfileForm() {
                     onChange={handleChange}
                 />
               </div>
-              <div className="form-check formgroup">
-                  <label className='form-check-label fw-bold'>Enable Email Alerts</label>
+              <div className="form-check formgroup p-1">
+                  <label className='form-check-label m-1 fw-bold'>Enable Email Alerts</label>
                   <input
                       type="checkbox"
                       name="enableAlerts"
-                      className="form-check-input form-control mb-3"
+                      className="form-check-input m-1 pt-3 form-control"
                       checked={formData.enableAlerts}
                       onChange={handleChange}
                   />

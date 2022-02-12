@@ -1,12 +1,10 @@
-import React, { useState, useContext } from "react";
-import UserContext from "../auth/UserContext";
-import { useHistory, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Alert from "../alert";
 import './form.css';
 
 
 function LoginForm({ login }) {
-  const { currentUser } = useContext(UserContext);
   const history = useHistory();
 
   const [formData, setFormData] = useState({
@@ -18,7 +16,9 @@ function LoginForm({ login }) {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
+    // attempts login
     let result = await login(formData);
+    // if valid, Dashboard is loaded
     if (result.success) {
       history.push("/"); 
     } else {
@@ -29,10 +29,6 @@ function LoginForm({ login }) {
   function handleChange(evt) {
     const { name, value } = evt.target;
     setFormData(l => ({ ...l, [name]: value }));
-  }
-
-  if(currentUser){
-    return <Redirect to={"/"} />
   }
 
   return (

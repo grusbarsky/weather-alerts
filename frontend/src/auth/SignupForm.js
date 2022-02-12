@@ -18,7 +18,9 @@ function SignupForm({ signup }) {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
+    // attempts signup
     let result = await signup(formData);
+    // if successfull, shows Dashboard
     if (result.success) {
       history.push("/");
     } else {
@@ -28,6 +30,7 @@ function SignupForm({ signup }) {
 
   function handleChange(evt) {
     const target = evt.target;
+    // if input is of type checkbox, set value to checked
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     setFormData(data => ({ ...data, [name]: value }));
@@ -88,19 +91,18 @@ function SignupForm({ signup }) {
                       onChange={handleChange}
                   />
                 </div>
-                <div className="form-check form-group">
-                  <label className='form-check-label fw-bold'>Enable Email Alerts</label>
+                <div className="form-check form-group p-1">
+                  <label className='form-check-label m-1 fw-bold'>Enable Email Alerts</label>
                   <input
                       type="checkbox"
                       name="enableAlerts"
-                      className="form-check-input form-control mb-3"
+                      className="form-check-input m-1 pt-3 form-control"
                       checked={formData.enableAlerts}
                       onChange={handleChange}
                   />
                 </div>
 
-                {formErrors.length
-                    ? <Alert type="danger" messages={formErrors} />
+                {formErrors.length ? <Alert type="danger" messages={formErrors} />
                     : null
                 }
 

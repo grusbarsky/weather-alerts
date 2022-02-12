@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import useLocalStorage from "./hooks/UseLocalStorage";
 import Navigation from "./routes/Navigation";
@@ -6,6 +6,7 @@ import Routes from "./routes/Routes";
 import WeatherAlertApi from "./api";
 import UserContext from "./auth/UserContext";
 import jwt from "jsonwebtoken";
+import LoadingOverlay from 'react-loading-overlay';
 
 
 // rememeber token for future login attempts
@@ -17,6 +18,7 @@ function App() {
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  const [pending, setPending] = useState(true);
 
 
   useEffect(function loadUserInfo() {
@@ -34,9 +36,9 @@ function App() {
         }
       }
       setInfoLoaded(true);
+      setPending(false)
     }
 
-    setInfoLoaded(false);
     getCurrentUser();
   }, [token]);
 
@@ -73,18 +75,39 @@ function App() {
 
 
   return (
-      <BrowserRouter>
-        <UserContext.Provider
-            value={{ currentUser, setCurrentUser }}>
-          <div className="App">
-            <Navigation logout={logout} />
-            <div className='routes'>
-              <Routes login={login} signup={signup} />
+    <BrowserRouter>
+      <UserContext.Provider
+        value={{ currentUser, setCurrentUser }}>
+        {pending ? (
+          <div className='p-5'>
+            <div className='m-5 p-5'>
+              <LoadingOverlay
+                active
+                spinner={true}
+                text='Loading...'
+                styles={{
+                  spinner: (base) => ({
+                    ...base,
+                    width: '7rem',
+                    '& svg circle': {
+                      stroke: 'black'
+                    }
+                  })
+                }}
+              >
+              </LoadingOverlay>
             </div>
           </div>
-        </UserContext.Provider>
-      </BrowserRouter>
-  );
+        ) : (
+        <div className="App">
+          <Navigation logout={logout} />
+          <div className='routes'>
+            <Routes login={login} signup={signup} />
+          </div>
+        </div>)}
+      </UserContext.Provider>
+    </BrowserRouter>
+  )
 }
 
 export default App;

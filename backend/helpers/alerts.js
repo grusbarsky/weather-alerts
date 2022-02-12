@@ -4,19 +4,27 @@ require('dotenv').config();
 
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY
 
+// helper function to get all alerts for every location in a array
+// return an array of objects grouped by location
+    // returned{
+    //           location: 'name, regioon'
+    //            alerts: [alert1, alert2]
+    // }
+
 async function getAlerts(locations){
     let locationAlertsPromise = [];
 
     let allAlerts = [];
 
-    // loop through locations
+    // loop through all locations
+    // add promise to promise array
     for(let i=0; i<locations.length; i++){
         locationAlertsPromise.push(
             axios.get(`http://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${locations[i]}&days=1&aqi=no&alerts=yes`)
         );
     }
 
-    // resolve of promises
+    // resolve of promises, and loop through data for each location
     await Promise.all(locationAlertsPromise).then((locationData) => {
         for (location of locationData){
             let alerts = location.data.alerts.alert;

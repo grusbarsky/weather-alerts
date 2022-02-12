@@ -74,7 +74,7 @@ class WeatherAlertApi {
   }
 
   static async saveArticle(username, data) {
-    let res = await this.request(`news/${username}/save-article`, data, "post");
+    await this.request(`news/${username}/save-article`, data, "post");
   }
   
   static async deleteArticle(username, id) {

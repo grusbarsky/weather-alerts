@@ -1,16 +1,16 @@
 "use strict";
 
-// handles auth in routes
-
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 const { UnauthorizedError } = require("../expressError");
+
+// middleware handles authorizarion in routes
 
 
 // Authenticate user
 // If a token was provided, verify it, and, if valid, store the token payload
 //  on res.locals
-// 
+
 // It's not an error if no token was provided or if the token is not valid
 
 function authenticateJWT(req, res, next) {
@@ -26,7 +26,7 @@ function authenticateJWT(req, res, next) {
   }
 }
 
-// ensure a user is logged in
+// ensure that a user is logged in
 function ensureLoggedIn(req, res, next) {
   try {
     if (!res.locals.user) throw new UnauthorizedError();
@@ -37,7 +37,7 @@ function ensureLoggedIn(req, res, next) {
 }
 
 // ensure the correct user is logged in and acessing route
-
+// for instance, only testUser should be accessing testUsers settings
 function ensureCorrectUser(req, res, next) {
   try {
     const user = res.locals.user;

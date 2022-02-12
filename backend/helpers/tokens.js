@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config");
 
-// return signed jwt from user data
+// helper that returns signed jwt from user data
 
 function createToken(user) {
   let payload = {

@@ -5,21 +5,26 @@
     "properties": {
       "password": {
         "type": "string",
-        "minLength": 5
+        "minLength": 8
       },
       "firstName": {
         "type": "string",
-        "minLength": 1,
-        "maxLength": 15
+        "minLength": 3,
+        "maxLength": 15,
+        "message": "First name must be between 3 and 15 characters"
       },
       "lastName": {
         "type": "string",
-        "minLength": 1,
-        "maxLength": 25
+        "minLength": 3,
+        "maxLength": 25,
+        "message": "Last name must be between 3 and 15 characters"
       },
       "email": {
         "type": "string",
-        "format": "email"
+        "format": "email",
+        "minLength": 10,
+        "pattern": "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*|.{3,}@[^.]{3,}$",
+        "message": "Email is invalid"
       },
       "enableAlerts": {
         "type": "boolean"

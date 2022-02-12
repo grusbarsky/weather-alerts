@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import ArticleCard from "./ArticleCard";
 import UserContext from "../auth/UserContext";
+import { changeDateFormat } from "../helpers";
 
-// shows a list of a users saved articles
+// shows a list of a users saved articles with a button to delete
 
 
 function UserArticleList(props) {
 
   const {currentUser} = useContext(UserContext);
   const [articles, setArticles] = useState(null);
-  const [saved, setSaved] = useState(true)
+  // assumes all articles are saved
+  const [saved] = useState(true)
 
   useEffect(function getArticlesOnMount() {
     getArticles();
@@ -37,7 +39,7 @@ function UserArticleList(props) {
                               imageUrl: a.imageUrl,
                               source: a.sourceName,
                               description: a.description,
-                              datePublished: a.datePublished
+                              datePublished: changeDateFormat(a.datePublished)
                             }
                           }}
                           saved = { saved ? true : false}

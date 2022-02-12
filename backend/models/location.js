@@ -4,6 +4,7 @@ const { NotFoundError} = require("../expressError");
 // class for locations
 
 class Location{
+  // allows you to find all locations that have been saved by users
     static async findAll() {
         const result = await db.query(
               `SELECT coordinates

@@ -5,11 +5,11 @@
 const jsonschema = require("jsonschema");
 const axios = require('axios');
 const sgMail = require('@sendgrid/mail');
-
 const express = require("express");
 const router = new express.Router();
-const { getDates } = require("../helpers/date");
 require('dotenv').config();
+
+const { getDates } = require("../helpers/date");
 const NEWS_API_KEY = process.env.NEWS_API_KEY;
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 const articleSearchSchema = require("../schemas/articleSearch.json");
@@ -17,18 +17,18 @@ const { BadRequestError } = require("../expressError");
 const{ emailArticle } = require("../helpers/emails");
 const { ensureCorrectUser } = require("../middleware/auth");
 const User = require("../models/user");
+const { weatherTerms } = require("../helpers/weatherQuery")
 
-// move this to helper and import *******************************************************************
- const weatherTerms = "weather OR natural OR disaster OR hurricane OR tornado OR rain OR tsunami OR cyclone OR snow OR storm OR evacuation OR earthquake OR wildfire OR drought OR flood OR mudslide"
- let encoded = encodeURI(weatherTerms);
 
-// api call to receive list of articles
+// returns a list of weather related articles from the past 7 days
+// sorted by relevancy
 
 router.get("/", async function (req, res, next) {
     try {
         let dates = getDates();
+        let searchTerms = weatherTerms();
         
-        let resp = await axios.get(`https://newsapi.org/v2/everything?q=${encoded}&from=${dates.earliestDate}&to=${dates.todaysDate}&sortBy=relevance&apiKey=${NEWS_API_KEY}`);
+        let resp = await axios.get(`https://newsapi.org/v2/everything?q=${searchTerms}&from=${dates.earliestDate}&to=${dates.todaysDate}&sortBy=relevance&page=1&apiKey=${NEWS_API_KEY}`);
 
         return res.json(resp.data);
 
@@ -37,12 +37,13 @@ router.get("/", async function (req, res, next) {
       }
 });
 
-// search for articles
-// can search by keyword/s
-// ex. keyword:snow
+// search articles with custon keyword
 
 router.get("/search", async function (req, res, next) {
-    let searchTerm = req.query
+    let searchTerm = req.query;
+    // makes multi word search, url friendly
+    let encoded = encodeURI(searchTerm.keyword)
+  
   
     try {
         const validator = jsonschema.validate(searchTerm, articleSearchSchema);
@@ -51,7 +52,7 @@ router.get("/search", async function (req, res, next) {
           throw new BadRequestError(errs);
         }
 
-        const resp = await axios.get(`https://newsapi.org/v2/everything?q=+${searchTerm.keyword}&apiKey=${NEWS_API_KEY}`)
+        const resp = await axios.get(`https://newsapi.org/v2/everything?q=+${encoded}&apiKey=${NEWS_API_KEY}`)
 
         return res.json(resp.data);
 
@@ -61,7 +62,6 @@ router.get("/search", async function (req, res, next) {
 });
 
 // send article via email
-
 // send article-url and message via body --> {"article": "url.com", "message": "text", "email": "email@email.com"}
 
 router.post("/send-article", function(req, res, next){
@@ -82,8 +82,7 @@ router.post("/send-article", function(req, res, next){
       }
 });
 
-// gets a list of a users saved articles
-
+// gets a list of a users saved articles and returns them
 router.get("/:username/saved-articles", ensureCorrectUser, async function(req,res,next){
   try{
       let username = req.params.username;
@@ -96,7 +95,7 @@ router.get("/:username/saved-articles", ensureCorrectUser, async function(req,re
 })
 
 
-// save article
+// user saves article
 // send via body --> {"article":{
 //                      "title": "title",
 //                      "articleUrl": "article url",
@@ -116,8 +115,7 @@ router.post("/:username/save-article", ensureCorrectUser, async function (req, r
     }
 });
 
-// delete a saved article
-
+// user deletes a saved article by id
 router.delete("/:username/delete-article/:id", ensureCorrectUser, async function (req, res, next){
   try {
       const articleId = +req.params.id;

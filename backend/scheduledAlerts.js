@@ -7,8 +7,6 @@ const res = require('express/lib/response');
 
 
 
-// CHECK ***********************************************************
-
 // using cron to schedule an alert check and sending alert emails
 // alert emails only sent to those who have alerts enabled
 

@@ -1,7 +1,7 @@
-// const { BadRequestError } = require("../expressError");
+const { BadRequestError } = require("../expressError");
 
 
-//  makes selective update queries
+//  helper function to make selective update queries
 
 //  creates the SET clause of an SQL UPDATE statement
 

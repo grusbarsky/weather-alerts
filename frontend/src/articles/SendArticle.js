@@ -5,11 +5,12 @@ import Alert from "../alert";
 import './articles.css';
 
 
+// displays a popup that allows a user to send a article via email with a personal message
 
 function SendArticle(props) {
 
     const [formErrors, setFormErrors] = useState([]);
-    const [saveConfirmed, setSaveConfirmed] = useState(false);
+    const [emailConfirmed, setEmailConfirmed] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         message: '',
@@ -27,7 +28,8 @@ function SendArticle(props) {
 
 
         try {
-            let sendEmail = await WeatherAlertApi.sendArticle(data);
+            // sends email
+            await WeatherAlertApi.sendArticle(data);
         } catch (errors) {
             setFormErrors(errors);
             return;
@@ -35,7 +37,7 @@ function SendArticle(props) {
 
         setFormData(f => ({ ...f }));
         setFormErrors([]);
-        setSaveConfirmed(true);
+        setEmailConfirmed(true);
     }
 
     /** Handle form data changing */
@@ -46,11 +48,7 @@ function SendArticle(props) {
     }
 
     return (
-        <Popup
-            trigger={<button className="btn btn-primary card-btn"> Send </button>}
-            modal
-            nested
-        >
+        <Popup trigger={<button className="btn btn-primary card-btn"> Send </button>} modal nested>
             {close => (
                 <div className="modal">
                     <div className="modal-dialog align">
@@ -85,19 +83,13 @@ function SendArticle(props) {
                                     />
                                 </div>
 
-                                {formErrors.length
-                                    ? <Alert type="danger" messages={formErrors} />
+                                {formErrors.length ? <Alert type="danger" messages={formErrors} />
                                     : null}
 
-                                {saveConfirmed
-                                    ?
-                                    <Alert type="success" messages={["Email sent successfully"]} />
+                                {emailConfirmed ? <Alert type="success" messages={["Email sent successfully"]} />
                                     : null}
 
-                                <button
-                                    className="btn btn-primary float-end"
-                                    onClick={handleSubmit}
-                                >
+                                <button className="btn btn-primary float-end" onClick={handleSubmit}>
                                     Send Email
                                 </button>
                             </form>

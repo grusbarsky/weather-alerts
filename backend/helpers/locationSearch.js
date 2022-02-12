@@ -3,6 +3,8 @@ require('dotenv').config();
 const MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
 const axios = require("axios");
 
+// helper function that handles searching for valid locations and returns data including the coordinates
+
 async function locationSearch(query) {
     try {
         const locations = await axios.get(

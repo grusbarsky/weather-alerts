@@ -13,6 +13,8 @@ function getDatabaseUri() {
       : process.env.DATABASE_URL || "weather_alerts";
 }
 
+// get email to use with sendgris
+// use dummy email incase of tests to not expose address
 function getEmail() {
   return (process.env.NODE_ENV === "test")
       ? "test@test.com"

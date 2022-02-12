@@ -3,7 +3,6 @@
 // Routes for authentication
 
 const jsonschema = require("jsonschema");
-
 const User = require("../models/user");
 const express = require("express");
 const router = new express.Router();
@@ -11,6 +10,7 @@ const { createToken } = require("../helpers/tokens");
 const userAuthSchema = require("../schemas/userAuth.json");
 const userRegisterSchema = require("../schemas/userRegister.json");
 const { BadRequestError } = require("../expressError");
+
 
 //   { username, password } => { token }
 // Returns JWT token for further authentication requests
@@ -34,14 +34,14 @@ router.post("/login", async function (req, res, next) {
 
 
 // { user } => { token }
-//  must include { username, password, firstName, lastName, email, enableAlerts (boolean value) }
+//  must include { username, password, firstName, lastName, email, enableAlerts(boolean value) }
 // Returns JWT token for further authentication requests
 
 router.post("/register", async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, userRegisterSchema);
     if (!validator.valid) {
-      const errs = validator.errors.map(e => e.stack);
+      const errs = validator.errors.map(e => e.schema.message);
       throw new BadRequestError(errs);
     }
 

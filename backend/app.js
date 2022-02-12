@@ -15,7 +15,6 @@ const newsRoutes = require("./routes/news");
 const alertsRoutes = require("./routes/alerts");
 
 const morgan = require("morgan");
-
 const app = express();
 
 app.use(cors());
