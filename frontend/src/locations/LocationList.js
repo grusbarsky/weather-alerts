@@ -100,7 +100,7 @@ function LocationList(props) {
       <SearchForm onSearchSubmit={onSearchSubmit} clearResults={clearResults} />
       {options
         ? (
-          <div className="OptionList-list list-group w-50 mx-auto">
+          <div className="OptionList-list list-group w-50 mb-5 mx-auto">
             {options.map(info => (
                 <OptionCard
                   info={{

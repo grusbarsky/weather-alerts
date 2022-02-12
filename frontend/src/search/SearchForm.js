@@ -30,9 +30,6 @@ function SearchForm({ onSearchSubmit, clearResults }) {
         value={updatedTerm}
         onChange={e => setUpdatedTerm(e.target.value)}
       />
-      <button type="submit" className="btn m-2 btn-primary btn-sm">
-        Submit
-      </button>
     </form>
   );
 }

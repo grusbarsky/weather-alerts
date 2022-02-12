@@ -23,12 +23,14 @@
     height: 90%;
 }
 
-
 ._loading_overlay_overlay{
-    background-color: black !important;
     color: black;
     font-size: 2rem;
     font-weight: bold;
     margin:auto;
     padding: auto;
+}
+
+._loading_overlay_content{
+    color: black;
 }
