@@ -50,12 +50,12 @@ class WeatherAlertApi {
   }
 
   static async saveLocation(username, data) {
-    let res = await this.request(`users/${username}/save-location`, data, "post");
+    let res = await this.request(`users/${username}/locations`, data, "post");
     return res;
   }
   
   static async deleteLocation(username, id) {
-    await this.request(`users/${username}/delete-location/${id}`, {}, "delete");
+    await this.request(`users/${username}/locations/${id}`, {}, "delete");
   }
 
   static async getLocations(location){
@@ -74,15 +74,15 @@ class WeatherAlertApi {
   }
 
   static async saveArticle(username, data) {
-    await this.request(`news/${username}/save-article`, data, "post");
+    await this.request(`news/${username}`, data, "post");
   }
   
   static async deleteArticle(username, id) {
-    await this.request(`news/${username}/delete-article/${id}`, {}, "delete");
+    await this.request(`news/${username}/article/${id}`, {}, "delete");
   }
 
   static async sendArticle(data){
-    await this.request(`news/send-article`, data, "post");
+    await this.request(`news/article/send`, data, "post");
   }
 
 }

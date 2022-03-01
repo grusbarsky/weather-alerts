@@ -67,6 +67,8 @@ router.delete("/:username", ensureCorrectUser, async function (req, res, next) {
 });
 
 
+// user locations routes
+
 // search location
 // {"location":"Baltimore City"}
 router.get("/locations/search/", async function(req, res, next){
@@ -87,7 +89,7 @@ router.get("/locations/search/", async function(req, res, next){
 // {"location":{
 //      "formattedAddress": "address",
 //      "coordinates": "lat,long"}}
-router.post("/:username/save-location", ensureCorrectUser, async function (req, res, next){
+router.post("/:username/locations", ensureCorrectUser, async function (req, res, next){
   try { 
       let location = req.body.location;
 
@@ -99,7 +101,7 @@ router.post("/:username/save-location", ensureCorrectUser, async function (req, 
 });
 
 // user deletes location
-router.delete("/:username/delete-location/:id", ensureCorrectUser, async function (req, res, next){
+router.delete("/:username/locations/:id", ensureCorrectUser, async function (req, res, next){
   try {
       const locationId = +req.params.id;
       await User.removeLocation(req.params.username, locationId);

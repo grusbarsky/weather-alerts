@@ -64,7 +64,7 @@ router.get("/search", async function (req, res, next) {
 // send article via email
 // send article-url and message via body --> {"article": "url.com", "message": "text", "email": "email@email.com"}
 
-router.post("/send-article", function(req, res, next){
+router.post("article/send", function(req, res, next){
     const user = res.locals.user;
     const body = req.body;
 
@@ -83,7 +83,7 @@ router.post("/send-article", function(req, res, next){
 });
 
 // gets a list of a users saved articles and returns them
-router.get("/:username/saved-articles", ensureCorrectUser, async function(req,res,next){
+router.get("/:username", ensureCorrectUser, async function(req,res,next){
   try{
       let username = req.params.username;
       let user = await User.get(username);
@@ -104,7 +104,7 @@ router.get("/:username/saved-articles", ensureCorrectUser, async function(req,re
 //                      "sourceName": "company",
 //                      "description": "description" }}
 
-router.post("/:username/save-article", ensureCorrectUser, async function (req, res, next){
+router.post("/:username", ensureCorrectUser, async function (req, res, next){
   try {
       let article = req.body.article;
      
@@ -116,7 +116,7 @@ router.post("/:username/save-article", ensureCorrectUser, async function (req, r
 });
 
 // user deletes a saved article by id
-router.delete("/:username/delete-article/:id", ensureCorrectUser, async function (req, res, next){
+router.delete("/:username/article/:id", ensureCorrectUser, async function (req, res, next){
   try {
       const articleId = +req.params.id;
       await User.removeArticle(req.params.username, articleId);

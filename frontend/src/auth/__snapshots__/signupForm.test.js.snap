@@ -91,15 +91,15 @@ exports[`matches snapshot 1`] = `
               />
             </div>
             <div
-              class="form-check form-group"
+              class="form-check form-group p-1"
             >
               <label
-                class="form-check-label fw-bold"
+                class="form-check-label m-1 fw-bold"
               >
                 Enable Email Alerts
               </label>
               <input
-                class="form-check-input form-control mb-3"
+                class="form-check-input m-1 pt-3 form-control"
                 name="enableAlerts"
                 type="checkbox"
               />

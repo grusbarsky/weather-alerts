@@ -8,7 +8,7 @@ function weatherTerms(){
     const joinKeywords = weatherKeywords.join(" OR ")
     // encode string for url
     let encoded = encodeURI(joinKeywords);
-    console.log("********* encoded: " + JSON.stringify(encoded))
+   
     return encoded;
 }
 
