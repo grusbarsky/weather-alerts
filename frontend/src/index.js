@@ -4,10 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MetaTags from 'react-meta-tags';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App>
+      <MetaTags>
+        <meta property='og:image' content='weather-image.png'/>
+      </MetaTags>
+    </App>
   </React.StrictMode>,
   document.getElementById('root')
 );

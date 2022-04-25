@@ -14,7 +14,7 @@ html body{
 
 #navbar-brand{
   color: #0855b1;
-  text-shadow: 1.5px 1.5px 1px #63a2e0;
+  text-shadow: 1.5px 1.5px .5px #63a2e0;
   font-size: 1.75rem;
 }
 
@@ -30,7 +30,7 @@ html body{
 
 #brand{
   color: #0855b1;
-  text-shadow: 2px 2px 2px #63a2e0;
+  text-shadow: 2px 2px 1px #63a2e0;
   font-size: 3rem;
 }
 
