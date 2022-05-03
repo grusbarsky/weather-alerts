@@ -6,20 +6,20 @@ import { changeDateFormat } from "../helpers";
 // creates a location card with alert card children
 // if no alerts exist for a location, returns null
 
-function AlertCard(props) {
+function AlertCard({location, alerts, width}) {
 
     return (
 
         <div >
-            {props.alerts.length ?
+            {alerts.length ?
                 (
-                    <div className={`AlertCard card mx-auto my-3 shadow-lg rounded border-light ${props.width}`}>
+                    <div className={`AlertCard card mx-auto my-3 shadow-lg rounded border-light ${width}`}>
                         <div className="card-body">
                             <div>
-                                <h4>{`Alerts for ${props.location}`}</h4>
+                                <h4>{`Alerts for ${location}`}</h4>
 
                                 <div className='list-group'>
-                                    {props.alerts.map(a => (
+                                    {alerts.map(a => (
                                         <div className='list-group-item m-3 shadow rounded border-light'>
                                             <h5 className="card-title">{a.headline}</h5>
                                             <p className='description'>{`${a.desc}`}</p>
@@ -34,7 +34,15 @@ function AlertCard(props) {
 
                         </div>
                     </div>
-                ) : (null)}
+                ) : (
+                    <div className={`AlertCard card mx-auto my-3 shadow-sm rounded border-light ${width}`}>
+                        <div className="card-body">
+                            <div>
+                                <h5 className='text-center'>{`No Alerts for ${location}`}</h5>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
         </div>
 

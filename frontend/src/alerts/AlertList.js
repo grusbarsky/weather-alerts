@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import WeatherAlertApi from "../api";
 import AlertCard from "./AlertCard";
 import LoadingOverlay from 'react-loading-overlay';
+import UserContext from "../auth/UserContext";
 
 
 // Shows all alerts per location
 
-function AlertList(props) {
+function AlertList({width}) {
 
   const [alerts, setAlerts] = useState(null);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   useEffect(function getAlertsOnMount() {
     getAlerts();
@@ -17,7 +19,10 @@ function AlertList(props) {
   async function getAlerts() {
     let alerts = await WeatherAlertApi.getAlerts();
     setAlerts(alerts);
+    let updatedUser = await WeatherAlertApi.getCurrentUser(currentUser.username);
+    setCurrentUser(updatedUser);
   }
+
 
   // shows Loading spinner until alerts are loaded
   if (!alerts) return (
@@ -51,12 +56,12 @@ function AlertList(props) {
                       <AlertCard
                         location={a.location}
                         alerts={a.alerts}
-                        width={props.width}
+                        width={width}
                       />
                   ))}
                 </div>
             ) : (
-                <h4 className="text-center mt-5">No alerts for your locations!</h4>
+                <h4 className="text-center mt-3 mb-5">Add location to show alerts!</h4>
             )}
       </div>
   );

@@ -6,7 +6,7 @@ import { changeDateFormat } from "../helpers";
 // shows a list of a users saved articles with a button to delete
 
 
-function UserArticleList(props) {
+function UserArticleList({width}) {
 
   const {currentUser} = useContext(UserContext);
   const [articles, setArticles] = useState(null);
@@ -43,12 +43,12 @@ function UserArticleList(props) {
                             }
                           }}
                           saved = { saved ? true : false}
-                          width = {props.width}
+                          width = {width}
                       />
                   ))}
                 </div>
             ) : (
-                <h4 className="text-center mt-5">You have no articles saved!</h4>
+                <h4 className="text-center mb-5 mt-3">You have no articles saved!</h4>
             )}
       </div>
   );

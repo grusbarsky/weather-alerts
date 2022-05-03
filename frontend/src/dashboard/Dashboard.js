@@ -5,11 +5,14 @@ import AlertList from "../alerts/AlertList";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../auth/UserContext";
+import WeatherAlertApi from "../api";
 
 
 
 function Dashboard() {
-    const { currentUser } = useContext(UserContext);
+    const { currentUser, setCurrentUser } = useContext(UserContext);
+   
+
     return (
         <div className="container">
             {/* if no currentUser, display login/signup homepage */}
@@ -46,11 +49,15 @@ function Dashboard() {
                             <div className='right col'>
                                 <div className='my-locations card shadow my-3'>
                                     <h4 className='mt-4'>My Locations</h4>
-                                    <LocationList width='w-75'/>
+                                    <LocationList 
+                                        width='w-75'
+                                    />
                                 </div>
                                 <div className='my-alerts card shadow my-3'>
                                     <h4 className='mt-4'>My Alerts</h4>
-                                    <AlertList width='w-75' />
+                                    <AlertList 
+                                        width='w-75' 
+                                    />
                                 </div>
                                 <div className='my-articles card shadow my-3'>
                                     <h4 className='mt-4'>My Articles</h4>

@@ -11,7 +11,7 @@ import './articles.css';
 // Shows list of articles and a search form
 // search form supports real time search
 
-function ArticleList(props) {
+function ArticleList({width}) {
 
   const { currentUser } = useContext(UserContext);
   const [articles, setArticles] = useState(null);
@@ -93,13 +93,13 @@ function ArticleList(props) {
                   }
                 }}
                 saved={saved(a.url)}
-                width={props.width}
+                width={width}
                 key={index}
               />
             ))}
           </div>
         ) : (
-          <h4 className="text-center mt-5">Sorry, no results match your search!</h4>
+          <h4 className="text-center mt-5 mb-3">Sorry, no results match your search!</h4>
         )}
     </div>
   );

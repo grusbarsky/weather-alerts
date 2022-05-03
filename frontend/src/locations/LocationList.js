@@ -12,7 +12,7 @@ import WeatherAlertApi from "../api";
 // on form submit, filter articles
 
 
-function LocationList(props) {
+function LocationList({width}) {
 
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const [locations, setLocations] = useState(null);
@@ -127,12 +127,12 @@ function LocationList(props) {
                 key={l.id}
                 saved={saved ? true : false}
                 delete={evt => deleteLocation(l)}
-                width={props.width}
+                width={width}
               />
             ))}
           </div>
         ) : (
-          <h4 className="text-center mt-5">No locations to show!</h4>
+          <h4 className="text-center mt-1 mb-5">No locations to show!</h4>
         )}
     </div>
   );
